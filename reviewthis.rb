@@ -7,10 +7,10 @@ require 'octopussy'
 
 configure do
   set :mustache, {
-     :views     => 'views/',
-     :templates => 'templates/'
-   }
-   
+    :views     => 'views/',
+    :templates => 'templates/'
+  }
+  
   # regex's
   USER = /[^a-z0-9_]@([a-z0-9_]+)/i
   HASH = /[^a-z0-9_]#([a-z0-9_]+)/i # not used yet, but perhaps soon?
@@ -36,7 +36,7 @@ end
 
 # development vars
 configure :development, :test do
-    set :from, 'reviewthis@localhost'
+  set :from, 'reviewthis@localhost'
   set :via, :sendmail
   set :via_options, {}
 end
@@ -61,7 +61,7 @@ post '/' do
   
   # check every commit, not just the first
   push['commits'].each do |commit|
-
+    
     message = commit['message']
     
     # we've got a #reviewthis hash
@@ -86,14 +86,14 @@ post '/' do
         vars[:email] = user.email
         mail(vars)
       end
-    
+      
       # now let's find any email addresses
       message.scan(EMAIL) do |email|
         vars[:username] = email
         vars[:email] = email
         mail(vars)
       end
-  
+      
     end
     
   end
